@@ -83,6 +83,18 @@ Complete the payment on the Flex using a test card (dip, tap, or swipe).
 
 Once the payment is approved on the Flex, the AirBridge app on the Station will close, and you will be returned to the Register app's receipt screen, with the order marked as paid.
 
+CI and Deployment Status
+
+Deployment currently uses the manual APK sideloading procedure above. Follow the mandatory Market-install, ADB-uninstall, and sideload sequence in [AGENTS.md](AGENTS.md) for development builds.
+
+This checkout has no workflow under the repository-root `.github/workflows/`. The file `CloverRelay/.github/workflows/android.yml` is empty; the CI examples in the AGENTS.md files are documentation only.
+
+The documented `./gradlew build` command has no checked-in Gradle wrapper to execute. `CloverRelay/settings.gradle` includes `core`, `app-mini`, and `app-station`; both app modules have empty build files, and the separate `app/app/build.gradle` is not included in those settings.
+
+Automatic deployment of `main` after successful CI is not configured. The repository defines no CI-accessible Clover Station target, deployment runner, release-signing configuration, or named deployment secrets. Working CI and an established deployment destination and access method are prerequisites for adding that workflow.
+
+No migration files or migration command are present in this checkout, so there is no repository migration step to run before deployment.
+
 Troubleshooting
 "Pay on Flex" button is missing: The AirBridge app is likely not installed correctly on the Station Solo, or the AndroidManifest.xml intent filter is incorrect. Verify the installation via adb shell pm list packages.
 
